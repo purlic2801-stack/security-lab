@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="hr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Laboratorij web sigurnosti</title>
+</head>
+<body>
+  <h1>Laboratorij web sigurnosti</h1>
+
+  <section>
+    <h2>Pretraga proizvoda</h2>
+    <form method="get" th:action="@{/}">
+      <div>
+        <label>
+          <input type="checkbox" id="Ranjivost" th:checked="${sqlEnabled}"
+                 onchange="ukljuciRanjivostSQL(this.checked)">
+          Ranjivost (SQL)
+        </label>
+      </div>
+      <label for="name">Naziv proizvoda</label>
+      <input id="name" name="name" th:value="${name}" required>
+      <button type="submit">Pretraži</button>
+    </form>
+
+    <div th:if="${results != null}">
+      <p>Broj rezultata: <strong th:text="${#lists.size(results)}"></strong></p>
+      <ul>
+        <li th:each="product : ${results}" th:text="${product}"></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Postavke obavijesti (meta CSRF napada)</h2>
+    <label>
+      <input type="checkbox" th:checked="${csrfEnabled}"
+             onchange="ukljuciRanjivostCsrf(this.checked)">
+      Ranjivost (CSRF)
+    </label>
+
+    <p>Obavijesti:
+      <strong th:text="${notificationsEnabled ? 'uključene' : 'isključene'}"></strong>
+    </p>
+
+    <form method="post" th:action="@{/preferences/notifications}">
+      <input type="hidden" name="enabled" th:value="${!notificationsEnabled}">
+      <button type="submit"
+              th:text="${notificationsEnabled ? 'Isključi obavijesti' : 'Uključi obavijesti'}">
+      </button>
+    </form>
+  </section>
+
+  <script>
+    function ukljuciRanjivostSQL(ukljuceno) {
+      fetch('/api/ukljuci-Ranjivost-SQL', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ukljuceno: ukljuceno })
+      });
+    }
+
+    function ukljuciRanjivostCsrf(ukljuceno) {
+      fetch('/api/ukljuci-Ranjivost-CSRF', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ukljuceno: ukljuceno })
+      });
+    }
+  </script>
+</body>
+</html>
