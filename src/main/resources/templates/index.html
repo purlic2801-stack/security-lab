@@ -2,13 +2,13 @@
 <html lang="hr" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>Laboratorij web sigurnosti</title>
+  <title>Sigurnost</title>
 </head>
 <body>
-  <h1>Laboratorij web sigurnosti</h1>
+  <h1>Sigurnost</h1>
 
   <section>
-    <h2>Pretraga proizvoda</h2>
+    <h2>Trgovina namještaja</h2>
     <form method="get" th:action="@{/}">
       <div>
         <label>
@@ -31,7 +31,7 @@
   </section>
 
   <section>
-    <h2>Postavke obavijesti (meta CSRF napada)</h2>
+    <h2>Postavke obavijesti</h2>
     <label>
       <input type="checkbox" th:checked="${csrfEnabled}"
              onchange="ukljuciRanjivostCsrf(this.checked)">
